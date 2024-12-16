@@ -1,0 +1,158 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:700");
+#stage {
+  margin: 0 auto;
+  width: 600px;
+  padding: 0 0 40px;
+}
+
+.perspective-on {
+  -webkit-perspective: 1000px;
+  -moz-perspective: 1000px;
+  perspective: 1000px;
+  /* Setting the perspective of the contents of the stage but not the stage itself*/
+}
+
+#rotate {
+  margin: 0 auto 0;
+  width: 90px;
+  height: 220px;
+  padding-top: 200px;
+  /* Ensure that we're in 3D space */
+  transform-style: preserve-3d;
+}
+
+.ring {
+  margin: 0 auto;
+  height: 80px;
+  width: 90px;
+  float: left;
+  transform-style: preserve-3d;
+}
+
+.slot {
+  position: absolute;
+  width: 90px;
+  height: 80px;
+  box-sizing: border-box;
+  color: black;
+  background: #fff;
+  border: solid 2px #000;
+  -webkit-backface-visibility: visible;
+  -moz-backface-visibility: visible;
+  backface-visibility: visible;
+}
+
+.slot p {
+  font-size: 36px;
+  font-weight: bold;
+  line-height: 80px;
+  margin: 0;
+  text-align: center;
+}
+
+/*
+.slot {
+  border-radius: 30px 30px 0 0;
+  padding: 13px 12px 12px;
+  background-color: #FFF;
+  perspective: 1000px;
+}
+
+.slot-machine {
+  display: flex;
+}
+
+.slot-square {
+  width: 144px;
+  height: 148px;
+  position: relative;
+  // overflow: hidden;
+  transform-style: preserve-3d;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background-image: linear-gradient(to top, #000000, #141414 1%, #454545 3%, #717171 5%, #979797 7%, #b8b8b8 10%, #d2d2d2 12%, #e6e6e6 15%, #f4f4f4 18%, #fcfcfc 22%, #ffffff 29%, #fdfdfd 41%, #f6f7f7 45%, #ebebec 49%, #e6e7e8 49%, #ecedee 68%, #f1f2f2 76%, #eaebeb 78%, #d8d8d8 81%, #b9b9b9 85%, #8e8e8e 89%, #575757 94%, #151515 99%, #000000);
+    mix-blend-mode: multiply;
+  }
+
+  &::after {
+    opacity: 0.5;
+  }
+
+  &:first-child {
+    margin-right: 4px;
+
+    .slot-square__frame {
+      background: url('http://katiamoreira.fr/temp/slot-frame-left.svg') no-repeat;
+    }
+  }
+
+  &:last-child {
+    margin-left: 4px;
+
+    .slot-square__frame {
+      background: url('http://katiamoreira.fr/temp/slot-frame-right.svg') no-repeat;
+    }
+  }
+}
+
+.slot-square__frame {
+  background-size: contain;
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: 150;
+  opacity: 0;
+}
+
+.slot-square__img {
+  max-width: 100%;
+}
+
+.slot-square__light {
+  width: 177px;
+  height: 5px;
+  background-color: #FFF;
+  filter: blur(2px);
+  opacity: 0.49;
+  position: absolute;
+  top: 50%; left: 4px;
+}
+
+*/
+/* ------ launch animation style ------ */
+.slot-launch {
+  padding: 20px 0 10px;
+  text-align: center;
+}
+
+.slot-launch__btn {
+  padding: 10px;
+  border: 2px solid #104fa8;
+  border-radius: 10px;
+  background: transparent;
+  color: #104fa8;
+  font: inherit;
+  line-height: normal;
+  cursor: pointer;
+  transition: background 0.2s;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+}
+.slot-launch__btn:hover {
+  background-color: rgba(16, 79, 168, 0.1);
+}
+
+/* ------ general style ------ */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: "Montserrat";
+  color: #FFF;
+  background-color: #104fa8;
+}
