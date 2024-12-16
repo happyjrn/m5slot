@@ -1,63 +1,52 @@
-let SLOTS_PER_REEL = 6;
+let SLOTS_PER_REEL = 10; // 슬롯 개수 (0~9)
 const SLOT_HEIGHT = 80;
 let REEL_RADIUS = SLOT_HEIGHT / 2 / Math.tan(Math.PI / SLOTS_PER_REEL);
-const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+const NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+let isRolling = true; // 슬롯이 롤링 중인지 여부
 
 function createSlots() {
-  var slotAngle = 360 / SLOTS_PER_REEL;
+  let slotAngle = 360 / SLOTS_PER_REEL;
 
   $('.slot').each(function (index) {
-    var transform = 'rotateX(' + slotAngle * index + 'deg) translateZ(' + REEL_RADIUS + 'px)';
-
+    let transform = 'rotateX(' + slotAngle * index + 'deg) translateZ(' + REEL_RADIUS + 'px)';
     this.style.transform = transform;
   });
 }
 
-function goToIndex(index, duration, callback = null) {
-  var angle = 360 / SLOTS_PER_REEL * index;
-  TweenMax.to('#ring', duration, {
-    rotationX: '+=' + -angle,
-    ease: Power0.easeNone,
-    onComplete: () => {
-      if (callback) {
-        callback();
-      }
-    } });
-
-}
-
-function appendNewSlots(nbSlots) {
-  var oldEls = $('#ring').find('.slot');
-
-  // SLOTS_PER_REEL = nbSlots;
-  // REEL_RADIUS = (SLOT_HEIGHT / 2) / Math.tan(Math.PI / SLOTS_PER_REEL)
-
-  for (i = 0; i < nbSlots; i++) {
-    var el = document.createElement('div');
-    el.className = 'slot';
-
-    $(el).append('<p>' + LETTERS[i] + '</p>');
-    var transform = 'rotateX(' + 360 / SLOTS_PER_REEL * i + 'deg) translateZ(' + REEL_RADIUS + 'px)';
-
-    el.style.transform = transform;
-
-    $('#ring').append(el);
-
-    $(oldEls).remove();
+function startRolling() {
+  // 무한 롤링 효과
+  if (isRolling) {
+    TweenMax.to('#ring', 1, {
+      rotationX: '+=360',
+      ease: Power0.easeNone,
+      onComplete: startRolling // 재귀적으로 반복
+    });
   }
 }
 
-function newSearch() {
-  goToIndex(SLOTS_PER_REEL * 3, 1.5, () => {
-    appendNewSlots(10);
-    goToIndex(SLOTS_PER_REEL, 0.5);
+function stopRolling() {
+  let targetIndex = Math.floor(Math.random() * SLOTS_PER_REEL); // 멈출 위치
+  let finalAngle = 360 / SLOTS_PER_REEL * targetIndex;
+
+  // 천천히 멈추는 애니메이션
+  TweenMax.to('#ring', 3, {
+    rotationX: '+=' + (1080 + finalAngle), // 3회전 후 정확한 위치에 멈춤
+    ease: Power4.easeOut,
+    onComplete: () => {
+      isRolling = false; // 롤링 중단
+    }
   });
 }
 
 $(document).ready(function () {
   createSlots();
+  startRolling();
 
-  setTimeout(() => {
-    newSearch();
-  }, 2000);
+  $(document).on('keydown', function (event) {
+    if (event.key === 'Enter' && isRolling) {
+      isRolling = false; // 롤링 중단 플래그 설정
+      stopRolling(); // 슬롯 멈춤
+    }
+  });
 });
